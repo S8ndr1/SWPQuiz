@@ -11,6 +11,7 @@ public class MainFrame extends JFrame{
     JButton buttonB;
     JButton buttonC;
     JButton buttonD;
+    JLabel question;
     JLabel questionCheck;
     JPanel submitPanel;
     JButton submitButton;
@@ -21,14 +22,14 @@ public class MainFrame extends JFrame{
 
 
 
-    MainFrame(){
+    public MainFrame(Quiz quiz){
 
         GridLayout layout = new GridLayout(8,3);
 
         JLabel title = new JLabel("Joggl's Quiz");
         mainframe.add(title);
 
-        JLabel question = new JLabel("Frage...");
+        question = new JLabel("Frage...");
         mainframe.add(question);
 
         answerPanel = new JPanel();
@@ -54,26 +55,11 @@ public class MainFrame extends JFrame{
 
 
 
-
-        // Question-Konstruktor wird aufgerufen, mit der passenden Frage, Antwortmöglichkeiten
-        // und der korrekten Antwort
-        Question q1 = new Question(
-                "Was ist 2+2?",
-                new String[]{"67","4","69","42"}, 1);
-
-        // setzt den Text der ersten Frage
-        question.setText(q1.getQuestionText());
-
-        // Hier werden den buttons die jeweiligen Antwortmöglichkeiten mitgegeben
-        buttonA.setText(q1.getPossibleAnswers()[0]);
-        buttonB.setText(q1.getPossibleAnswers()[1]);
-        buttonC.setText(q1.getPossibleAnswers()[2]);
-        buttonD.setText(q1.getPossibleAnswers()[3]);
+        Question q = quiz.getCurrentQuestion();
 
 
-        // Dies ist nötig, um im weiteren Verlaufe die Antwort auf ihre Richtigkeit zu prüfen.
-        // (durch selectedAnswer)
-        // Klickt man einen Button an, ändert sich selectedAnswer auf den jeweiligen Wert
+        updateTexts(q);
+
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,13 +88,17 @@ public class MainFrame extends JFrame{
             }
         });
 
+
         // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
         submitButton.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (q1.isCorrect(selectedAnswer)) {
+                if (q.isCorrect(selectedAnswer)) {
                     questionCheck.setText("Richtig!");
+                    quiz.nextQuestion();
+                    updateTexts(quiz.getCurrentQuestion());
+
                 }else{
                     questionCheck.setText("Falsch!");
                 }
@@ -122,6 +112,14 @@ public class MainFrame extends JFrame{
         mainframe.setSize(800,600);
         mainframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mainframe.setVisible(true);
+    }
+
+    private void updateTexts(Question q) {
+        question.setText(q.getQuestionText());
+        buttonA.setText(q.getPossibleAnswers()[0]);
+        buttonB.setText(q.getPossibleAnswers()[1]);
+        buttonC.setText(q.getPossibleAnswers()[2]);
+        buttonD.setText(q.getPossibleAnswers()[3]);
     }
 
 }
