@@ -4,6 +4,7 @@ import javax.swing.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    JFrame landingPage = new MainFrame();
+    Quiz quiz = new Quiz();
+    JFrame landingPage = new MainFrame(quiz);
 
 }
