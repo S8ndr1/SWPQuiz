@@ -34,5 +34,10 @@ public class Quiz {
             if (currentQuestion < questions.size()-1) {
                 currentQuestion++;
             }
-        }}
+        }
+
+    public void resetQuiz() {
+        currentQuestion = 0;
+    }
+}
 

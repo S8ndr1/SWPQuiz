@@ -53,7 +53,16 @@ public class MainFrame extends JFrame{
         submitPanel.add(cancelButton);
         mainframe.add(submitPanel);
 
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                quiz.resetQuiz();                       // zurück zu Frage 1
+                selectedAnswer = -1;                    // Auswahl zurücksetzen
+                questionCheck.setText("");              // Text löschen
+                updateTexts(quiz.getCurrentQuestion()); // erste Frage anzeigen
+            }
+        });
 
         Question q = quiz.getCurrentQuestion();
 
