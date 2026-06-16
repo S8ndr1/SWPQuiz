@@ -20,7 +20,6 @@ public class MainFrame extends JFrame{
     private int selectedAnswer = -1;
 
 
-
     MainFrame(){
 
         GridLayout layout = new GridLayout(8,3);
@@ -51,8 +50,6 @@ public class MainFrame extends JFrame{
         submitPanel.add(submitButton);
         submitPanel.add(cancelButton);
         mainframe.add(submitPanel);
-
-
 
 
         // Question-Konstruktor wird aufgerufen, mit der passenden Frage, Antwortmöglichkeiten
@@ -115,8 +112,6 @@ public class MainFrame extends JFrame{
 
             }
         });
-
-
 
         mainframe.setLayout(layout);
         mainframe.setSize(800,600);

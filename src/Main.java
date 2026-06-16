@@ -6,5 +6,4 @@ void main() {
 
     JFrame landingPage = new MainFrame();
 
-
 }

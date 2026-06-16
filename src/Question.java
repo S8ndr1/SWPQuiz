@@ -1,7 +1,4 @@
-
-
 public class Question {
-
 
     private String questionText;
     private String[] possibleAnswers;
@@ -18,16 +15,13 @@ public class Question {
         return questionText;
     }
 
-
     // getter Methode um die möglichen Antworten den Buttons zuzuweißen
     public String[] getPossibleAnswers() {
         return possibleAnswers;
     }
 
-
     // Prüft ob die ausgewählte Antwort richtig ist (siehe MainFrame)
     public boolean isCorrect(int answerIndex) {
         return answerIndex == correctAnswer;
-
     }
 }
