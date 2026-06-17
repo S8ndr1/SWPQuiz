@@ -132,10 +132,10 @@ public class MainFrame extends JFrame{
                 questionCheck.setText("");              // Text löschen
                 updateTexts(quiz.getCurrentQuestion()); // erste Frage anzeigen
 
-                buttonA.setEnabled(true);
-                buttonB.setEnabled(true);
-                buttonC.setEnabled(true);
-                buttonD.setEnabled(true);
+                errorCount = 0;
+                correctCount = 0;
+
+                setButtonEnabled();
                 setDefaultButtonColor();
 
             }
@@ -217,6 +217,9 @@ public class MainFrame extends JFrame{
                         else{
                             JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen richtig beantwortet!" +
                                     "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!");
+                            quiz.resetQuiz();
+                            correctCount = 0;
+                            errorCount = 0;
 
                         }
 
