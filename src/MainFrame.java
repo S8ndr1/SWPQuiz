@@ -133,11 +133,8 @@ public class MainFrame extends JFrame{
                 buttonB.setEnabled(true);
                 buttonC.setEnabled(true);
                 buttonD.setEnabled(true);
+                setDefaultButtonColor();
 
-                buttonA.setBackground(Color.lightGray);
-                buttonB.setBackground(Color.lightGray);
-                buttonC.setBackground(Color.lightGray);
-                buttonD.setBackground(Color.lightGray);
             }
         });
 
@@ -146,18 +143,15 @@ public class MainFrame extends JFrame{
 
         updateTexts(q);
 
-        buttonA.setBackground(Color.lightGray);
-        buttonB.setBackground(Color.lightGray);
-        buttonC.setBackground(Color.lightGray);
-        buttonD.setBackground(Color.lightGray);
+        setDefaultButtonColor();
 
 
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-                isButtonClicked = true;
                 buttonB.setEnabled(false);
                 buttonC.setEnabled(false);
                 buttonD.setEnabled(false);
@@ -171,11 +165,7 @@ public class MainFrame extends JFrame{
                 selectedAnswer = 1;
                 buttonB.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-
-                buttonA.setEnabled(false);
-                buttonC.setEnabled(false);
-                buttonD.setEnabled(false);
-
+                setButtonUnenabled();
             }
         });
 
@@ -185,10 +175,7 @@ public class MainFrame extends JFrame{
                 selectedAnswer = 2;
                 buttonC.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-
-                buttonA.setEnabled(false);
-                buttonB.setEnabled(false);
-                buttonD.setEnabled(false);
+                setButtonUnenabled();
 
             }
         });
@@ -199,10 +186,7 @@ public class MainFrame extends JFrame{
                 selectedAnswer = 3;
                 buttonD.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-
-                buttonA.setEnabled(false);
-                buttonB.setEnabled(false);
-                buttonC.setEnabled(false);
+                setButtonUnenabled();
 
             }
         });
@@ -221,32 +205,20 @@ public class MainFrame extends JFrame{
                         quiz.nextQuestion();
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-
-                        buttonA.setEnabled(true);
-                        buttonB.setEnabled(true);
-                        buttonC.setEnabled(true);
-                        buttonD.setEnabled(true);
+                        setButtonEnabled();
 
                     } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
-
-                        buttonA.setEnabled(true);
-                        buttonB.setEnabled(true);
-                        buttonC.setEnabled(true);
-                        buttonD.setEnabled(true);
+                        setButtonEnabled();
                     }
 
                     }
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
-
-                buttonA.setBackground(Color.lightGray);
-                buttonB.setBackground(Color.lightGray);
-                buttonC.setBackground(Color.lightGray);
-                buttonD.setBackground(Color.lightGray);
+                setDefaultButtonColor();
 
             }
         });
@@ -263,6 +235,27 @@ public class MainFrame extends JFrame{
         buttonB.setText(q.getPossibleAnswers()[1]);
         buttonC.setText(q.getPossibleAnswers()[2]);
         buttonD.setText(q.getPossibleAnswers()[3]);
+    }
+
+    private void setDefaultButtonColor(){
+        buttonA.setBackground(Color.lightGray);
+        buttonB.setBackground(Color.lightGray);
+        buttonC.setBackground(Color.lightGray);
+        buttonD.setBackground(Color.lightGray);
+    }
+
+    private void setButtonEnabled(){
+        buttonA.setEnabled(true);
+        buttonB.setEnabled(true);
+        buttonC.setEnabled(true);
+        buttonD.setEnabled(true);
+    }
+
+    private void setButtonUnenabled(){
+        buttonA.setEnabled(false);
+        buttonB.setEnabled(false);
+        buttonC.setEnabled(false);
+        buttonD.setEnabled(false);
     }
 
 }
