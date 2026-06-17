@@ -47,8 +47,8 @@ public class MainFrame extends JFrame{
         mainframe.add(questionCheck);
 
         submitPanel = new JPanel();
-        submitButton = new JButton("Submit");
-        cancelButton = new JButton("Cancel");
+        submitButton = new JButton("bestätigen");
+        cancelButton = new JButton("abbrechen");
         submitPanel.add(submitButton);
         submitPanel.add(cancelButton);
         mainframe.add(submitPanel);
@@ -69,10 +69,17 @@ public class MainFrame extends JFrame{
 
         updateTexts(q);
 
+        buttonA.setBackground(Color.lightGray);
+        buttonB.setBackground(Color.lightGray);
+        buttonC.setBackground(Color.lightGray);
+        buttonD.setBackground(Color.lightGray);
+
+
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 0;
+                buttonA.setBackground(Color.ORANGE);
             }
         });
 
@@ -80,6 +87,7 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 1;
+                buttonB.setBackground(Color.ORANGE);
             }
         });
 
@@ -87,6 +95,7 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 2;
+                buttonC.setBackground(Color.ORANGE);
             }
         });
 
@@ -94,6 +103,7 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 3;
+                buttonD.setBackground(Color.ORANGE);
             }
         });
 
@@ -105,12 +115,18 @@ public class MainFrame extends JFrame{
 
                 if (q.isCorrect(selectedAnswer)) {
                     questionCheck.setText("Richtig!");
+                    questionCheck.setForeground(Color.GREEN);
                     quiz.nextQuestion();
                     updateTexts(quiz.getCurrentQuestion());
 
                 }else{
                     questionCheck.setText("Falsch!");
+                    questionCheck.setForeground(Color.RED);
                 }
+                buttonA.setBackground(Color.lightGray);
+                buttonB.setBackground(Color.lightGray);
+                buttonC.setBackground(Color.lightGray);
+                buttonD.setBackground(Color.lightGray);
 
             }
         });
