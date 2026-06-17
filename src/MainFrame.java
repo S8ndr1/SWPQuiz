@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame{
+
+    private boolean isButtonClicked = false;
+
     JFrame mainframe = new JFrame();
 
     JPanel answerPanel;
@@ -16,6 +19,8 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+
+
 
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
@@ -53,6 +58,7 @@ public class MainFrame extends JFrame{
         submitPanel.add(cancelButton);
         mainframe.add(submitPanel);
 
+
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +67,16 @@ public class MainFrame extends JFrame{
                 selectedAnswer = -1;                    // Auswahl zurücksetzen
                 questionCheck.setText("");              // Text löschen
                 updateTexts(quiz.getCurrentQuestion()); // erste Frage anzeigen
+
+                buttonA.setEnabled(true);
+                buttonB.setEnabled(true);
+                buttonC.setEnabled(true);
+                buttonD.setEnabled(true);
+
+                buttonA.setBackground(Color.lightGray);
+                buttonB.setBackground(Color.lightGray);
+                buttonC.setBackground(Color.lightGray);
+                buttonD.setBackground(Color.lightGray);
             }
         });
 
@@ -80,6 +96,11 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
+                isButtonClicked = true;
+                buttonB.setEnabled(false);
+                buttonC.setEnabled(false);
+                buttonD.setEnabled(false);
+
             }
         });
 
@@ -88,6 +109,12 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 1;
                 buttonB.setBackground(Color.ORANGE);
+                isButtonClicked = true;
+
+                buttonA.setEnabled(false);
+                buttonC.setEnabled(false);
+                buttonD.setEnabled(false);
+
             }
         });
 
@@ -96,6 +123,12 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 2;
                 buttonC.setBackground(Color.ORANGE);
+                isButtonClicked = true;
+
+                buttonA.setEnabled(false);
+                buttonB.setEnabled(false);
+                buttonD.setEnabled(false);
+
             }
         });
 
@@ -104,6 +137,12 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 selectedAnswer = 3;
                 buttonD.setBackground(Color.ORANGE);
+                isButtonClicked = true;
+
+                buttonA.setEnabled(false);
+                buttonB.setEnabled(false);
+                buttonC.setEnabled(false);
+
             }
         });
 
@@ -113,16 +152,36 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (q.isCorrect(selectedAnswer)) {
-                    questionCheck.setText("Richtig!");
-                    questionCheck.setForeground(Color.GREEN);
-                    quiz.nextQuestion();
-                    updateTexts(quiz.getCurrentQuestion());
+                if(isButtonClicked) {
 
-                }else{
-                    questionCheck.setText("Falsch!");
-                    questionCheck.setForeground(Color.RED);
+                    if (q.isCorrect(selectedAnswer)) {
+                        questionCheck.setText("Richtig!");
+                        questionCheck.setForeground(Color.GREEN);
+                        quiz.nextQuestion();
+                        updateTexts(quiz.getCurrentQuestion());
+                        isButtonClicked = false;
+
+                        buttonA.setEnabled(true);
+                        buttonB.setEnabled(true);
+                        buttonC.setEnabled(true);
+                        buttonD.setEnabled(true);
+
+                    } else {
+                        questionCheck.setText("Falsch!");
+                        questionCheck.setForeground(Color.RED);
+                        isButtonClicked = false;
+
+                        buttonA.setEnabled(true);
+                        buttonB.setEnabled(true);
+                        buttonC.setEnabled(true);
+                        buttonD.setEnabled(true);
+                    }
+
+                    }
+                else{
+                    JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
+
                 buttonA.setBackground(Color.lightGray);
                 buttonB.setBackground(Color.lightGray);
                 buttonC.setBackground(Color.lightGray);
