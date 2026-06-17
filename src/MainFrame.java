@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 public class MainFrame extends JFrame{
 
     private boolean isButtonClicked = false;
+    private Question q;
+    public int errorCount;
+    public int correctCount;
 
     JFrame mainframe = new JFrame();
 
@@ -138,10 +141,13 @@ public class MainFrame extends JFrame{
             }
         });
 
-        Question q = quiz.getCurrentQuestion();
-
-
+        q = quiz.getCurrentQuestion();
         updateTexts(q);
+
+        correctCount = 0;
+        errorCount = 0;
+
+
 
         setDefaultButtonColor();
 
@@ -202,16 +208,28 @@ public class MainFrame extends JFrame{
                     if (q.isCorrect(selectedAnswer)) {
                         questionCheck.setText("Richtig!");
                         questionCheck.setForeground(Color.GREEN);
-                        quiz.nextQuestion();
+
+
+                        if(quiz.nextQuestion()){
+
+                        q = quiz.getCurrentQuestion();
+                        updateTexts(q);}
+                        else{
+                            JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen richtig beantwortet!" +
+                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!");
+
+                        }
+
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
                         setButtonEnabled();
-
+                        correctCount++;
                     } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         setButtonEnabled();
+                        errorCount++;
                     }
 
                     }
@@ -256,6 +274,14 @@ public class MainFrame extends JFrame{
         buttonB.setEnabled(false);
         buttonC.setEnabled(false);
         buttonD.setEnabled(false);
+    }
+
+    public int getCorrectCount(){
+        return correctCount;
+    }
+
+    public int getErrorCount(){
+        return errorCount;
     }
 
 }

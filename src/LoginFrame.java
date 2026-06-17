@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
@@ -38,15 +40,21 @@ public class LoginFrame extends JFrame {
         panel.add(loginButton);
 
         add(panel);
+
+
     }
     //ActionListener
     private void initLayoutListeners() {
         loginButton.addActionListener(e -> {
 
-            Quiz quiz = new Quiz();
-            //Neues Fenster MainFrame und dieses Fenster LoginFrame schließen
-            new MainFrame(quiz);
-            this.dispose();
-        });
+            if(userField.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Geben Sie bitte einen namen ein.");
+            }else {
+
+                Quiz quiz = new Quiz();
+                //Neues Fenster MainFrame und dieses Fenster LoginFrame schließen
+                new MainFrame(quiz);
+                this.dispose();
+            }});
     }
 }
