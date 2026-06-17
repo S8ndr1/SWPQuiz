@@ -24,13 +24,27 @@ public class MainFrame extends JFrame{
 
     public MainFrame(Quiz quiz){
 
-        GridLayout layout = new GridLayout(8,3);
+        mainframe.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.insets = new Insets(10,10,10,10);
+        gbc.fill = GridBagConstraints.BOTH;
 
         JLabel title = new JLabel("Joggl's Quiz");
-        mainframe.add(title);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 0.1;
+
+        mainframe.add(title, gbc);
 
         question = new JLabel("Frage...");
-        mainframe.add(question);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+
+        mainframe.add(question, gbc);
 
         answerPanel = new JPanel();
         buttonA = new JButton("A");
@@ -42,6 +56,53 @@ public class MainFrame extends JFrame{
         answerPanel.add(buttonC);
         answerPanel.add(buttonD);
         mainframe.add(answerPanel);
+
+        //A
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.weighty = 1;
+
+        mainframe.add(buttonA, gbc);
+        //B
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+
+        mainframe.add(buttonB, gbc);
+        //C
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+
+        mainframe.add(buttonC, gbc);
+        //D
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+
+        mainframe.add(buttonD, gbc);
+
+        //Farben
+        buttonA.setBackground(new Color(1, 51, 122));
+        buttonB.setBackground(new Color(1, 51, 122));
+        buttonC.setBackground(new Color(1, 51, 122));
+        buttonD.setBackground(new Color(1, 51, 122));
+
+        buttonA.setForeground(Color.WHITE);
+        buttonB.setForeground(Color.WHITE);
+        buttonC.setForeground(Color.WHITE);
+        buttonD.setForeground(Color.WHITE);
+
+        //Hintergrund
+        mainframe.getContentPane().setBackground(
+                new Color(25, 25, 80)
+        );
+
+        //Titel
+        title.setFont(new Font("Arial", Font.BOLD, 40));
+        title.setForeground(new Color(255,215,0));
+
+        //Frage
+        question.setFont(new Font("Arial", Font.BOLD, 26));
+        question.setForeground(Color.WHITE);
 
         questionCheck = new JLabel("Richtig / Falsch");
         mainframe.add(questionCheck);
@@ -132,8 +193,6 @@ public class MainFrame extends JFrame{
         });
 
 
-
-        mainframe.setLayout(layout);
         mainframe.setSize(800,600);
         mainframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mainframe.setVisible(true);
