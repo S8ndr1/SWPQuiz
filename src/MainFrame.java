@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class MainFrame extends JFrame{
 
     private boolean isButtonClicked = false;
@@ -22,6 +23,8 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+    //eventuell später implementieren:
+    //JLabel progressBar;
 
 
 
@@ -146,14 +149,26 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
+
+
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
                 quiz.resetQuiz();                       // zurück zu Frage 1
+
+                q = quiz.getCurrentQuestion();
+
                 selectedAnswer = -1;                    // Auswahl zurücksetzen
                 questionCheck.setText("");              // Text löschen
-                updateTexts(quiz.getCurrentQuestion()); // erste Frage anzeigen
+
+                isButtonClicked = false;
+                updateTexts(q); // erste Frage anzeigen
+                setDefaultButtonColor();
+                errorCount = 0;
+                correctCount = 1;
+
             }
         });
 
@@ -165,19 +180,18 @@ public class MainFrame extends JFrame{
         errorCount = 0;
 
 
-
         setDefaultButtonColor();
+
+
 
 
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                setDefaultButtonColor();
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-                buttonB.setEnabled(false);
-                buttonC.setEnabled(false);
-                buttonD.setEnabled(false);
 
             }
         });
@@ -185,32 +199,30 @@ public class MainFrame extends JFrame{
         buttonB.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                setDefaultButtonColor();
                 selectedAnswer = 1;
                 buttonB.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-                setButtonUnenabled();
             }
         });
 
         buttonC.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                setDefaultButtonColor();
                 selectedAnswer = 2;
                 buttonC.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-                setButtonUnenabled();
-
             }
         });
 
         buttonD.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                setDefaultButtonColor();
                 selectedAnswer = 3;
                 buttonD.setBackground(Color.ORANGE);
                 isButtonClicked = true;
-                setButtonUnenabled();
-
             }
         });
 
@@ -242,16 +254,13 @@ public class MainFrame extends JFrame{
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-                        setButtonEnabled();
                         correctCount++;
                     } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
-                        setButtonEnabled();
                         errorCount++;
                     }
-
                     }
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
@@ -280,20 +289,6 @@ public class MainFrame extends JFrame{
         buttonB.setBackground(Color.lightGray);
         buttonC.setBackground(Color.lightGray);
         buttonD.setBackground(Color.lightGray);
-    }
-
-    private void setButtonEnabled(){
-        buttonA.setEnabled(true);
-        buttonB.setEnabled(true);
-        buttonC.setEnabled(true);
-        buttonD.setEnabled(true);
-    }
-
-    private void setButtonUnenabled(){
-        buttonA.setEnabled(false);
-        buttonB.setEnabled(false);
-        buttonC.setEnabled(false);
-        buttonD.setEnabled(false);
     }
 
     public int getCorrectCount(){
