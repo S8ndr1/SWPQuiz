@@ -176,6 +176,7 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 new ScoreboardFrame();
+
             }
         });
 

@@ -15,4 +15,5 @@ class ScoreboardFrame extends JFrame {
 
         setVisible(true);
     }
+
 }
