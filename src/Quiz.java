@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Quiz {
 
@@ -39,6 +40,8 @@ public class Quiz {
 
         currentQuestion = 0;
 
+        Collections.shuffle(questions);
+
     }
         public Question getCurrentQuestion () {
             return questions.get(currentQuestion);
@@ -55,6 +58,7 @@ public class Quiz {
 
     public void resetQuiz() {
         currentQuestion = 0;
+        Collections.shuffle(questions);
     }
 }
 
