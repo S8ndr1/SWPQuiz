@@ -24,7 +24,7 @@ public class MainFrame extends JFrame{
     JButton submitButton;
     JButton cancelButton;
     //eventuell später implementieren:
-    //JLabel progressBar;
+    JProgressBar progressBar;
 
 
 
@@ -149,7 +149,11 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
+        progressBar = new JProgressBar(0,10);
+        mainframe.add(progressBar);
 
+        progressBar.setValue(correctCount);
+        progressBar.setStringPainted(true);
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -168,6 +172,7 @@ public class MainFrame extends JFrame{
                 setDefaultButtonColor();
                 errorCount = 0;
                 correctCount = 1;
+                progressBar.setValue(0);
 
             }
         });
@@ -241,20 +246,23 @@ public class MainFrame extends JFrame{
 
                         if(quiz.nextQuestion()){
 
-                        q = quiz.getCurrentQuestion();
-                        updateTexts(q);}
+                            q = quiz.getCurrentQuestion();
+                            updateTexts(q);
+                            correctCount++;
+                            progressBar.setValue(correctCount);
+                        }
                         else{
+                            progressBar.setValue(100);
                             JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
-                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
+                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!");
                             quiz.resetQuiz();
                             correctCount = 1;
                             errorCount = 0;
-
+                            progressBar.setValue(0);
                         }
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-                        correctCount++;
                     } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
