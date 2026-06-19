@@ -14,7 +14,6 @@ public class MainFrame extends JFrame{
     JFrame mainframe = new JFrame();
 
     JPanel answerPanel;
-    JButton scoreboard; // Wird nun initialisiert
     JButton buttonA;
     JButton buttonB;
     JButton buttonC;
@@ -25,7 +24,7 @@ public class MainFrame extends JFrame{
     JButton submitButton;
     JButton cancelButton;
     //eventuell später implementieren:
-    //JLabel progressBar;
+    JProgressBar progressBar;
 
 
 
@@ -61,32 +60,13 @@ public class MainFrame extends JFrame{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(15,15,15,15);
 
-        // Titel angepasst: Nimmt jetzt nur noch 1 Spalte ein (gridwidth = 1)
         JLabel title = new JLabel("Joggl's Quiz");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.8; // Mehr Platz für den Titel
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
         gbc.weighty = 0.1;
-        gbc.anchor = GridBagConstraints.WEST; // Etwas nach links ausrichten, damit Platz für den Button ist
         mainframe.add(title, gbc);
-
-        // SCOREBOARD BUTTON OBEN RECHTS
-        scoreboard = new JButton("Scoreboard");
-        scoreboard.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        scoreboard.setBackground(new Color(41, 128, 185)); // Schönes Blau
-        scoreboard.setForeground(Color.WHITE);
-        scoreboard.setFocusPainted(false);
-
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.2; // Weniger Platzgewichtung als der Titel
-        gbc.anchor = GridBagConstraints.EAST; // Ganz nach rechts oben zwingen
-        mainframe.add(scoreboard, gbc);
-
-        // Zurücksetzen des Anchors für die restlichen Elemente
-        gbc.anchor = GridBagConstraints.CENTER;
 
         question = new JLabel("Frage...");
         gbc.gridx = 0;
@@ -169,16 +149,12 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
+        progressBar = new JProgressBar(0,10);
+        progressBar.setStringPainted(true);
+        mainframe.add(progressBar);
 
-        // ACTION LISTENER FÜR SCOREBOARD
-        scoreboard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                new ScoreboardFrame();
 
-            }
-        });
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -197,6 +173,7 @@ public class MainFrame extends JFrame{
                 setDefaultButtonColor();
                 errorCount = 0;
                 correctCount = 1;
+                progressBar.setValue(0);
 
             }
         });
@@ -270,27 +247,32 @@ public class MainFrame extends JFrame{
 
                         if(quiz.nextQuestion()){
 
-                            q = quiz.getCurrentQuestion();
-                            updateTexts(q);}
+                        q = quiz.getCurrentQuestion();
+                        updateTexts(q);
+                        correctCount++;
+                        progressBar.setValue(correctCount);
+                        }
                         else{
+                            progressBar.setValue(100);
                             JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
                                     "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
                             quiz.resetQuiz();
                             correctCount = 1;
                             errorCount = 0;
+                            progressBar.setValue(0);
 
                         }
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-                        correctCount++;
+
                     } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
                     }
-                }
+                    }
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
