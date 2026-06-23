@@ -53,7 +53,33 @@ public class MainFrame extends JFrame{
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
-        points = new JLabel("Points: ");
+        //Buttons
+        buttonA = new JButton("A");
+        buttonB = new JButton("B");
+        buttonC = new JButton("C"); // Auf Question umschreiben
+        buttonD = new JButton("D");
+
+        answerPanel = new JPanel(new GridLayout(2,2,20,20));
+        answerPanel.setOpaque(false);
+
+        answerPanel.add(buttonA);
+        answerPanel.add(buttonB);
+        answerPanel.add(buttonC);
+        answerPanel.add(buttonD);
+
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 22);
+
+        buttonA.setFont(buttonFont);
+        buttonB.setFont(buttonFont);
+        buttonC.setFont(buttonFont);
+        buttonD.setFont(buttonFont);
+
+        //Punkte
+        points = new JLabel("Punkte: 0");
+        points.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        points.setForeground(new Color(255,215,0)); // Gold
+        points.setHorizontalAlignment(SwingConstants.CENTER);
+
 
         mainframe.setContentPane(hintergrundPanel);
 
@@ -77,33 +103,14 @@ public class MainFrame extends JFrame{
         gbc.gridwidth = 2;
         mainframe.add(question, gbc);
 
-        buttonA = new JButton("A");
-        buttonB = new JButton("B");
-        buttonC = new JButton("C"); // Auf Question umschreiben
-        buttonD = new JButton("D");
-
-        //A
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
         gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
 
-        mainframe.add(buttonA, gbc);
-        //B
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-
-        mainframe.add(buttonB, gbc);
-        //C
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-
-        mainframe.add(buttonC, gbc);
-        //D
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-
-        mainframe.add(buttonD, gbc);
+        mainframe.add(answerPanel, gbc);
 
         //Titel
         title.setFont(new Font("Segoe UI", Font.BOLD, 42));
@@ -158,9 +165,15 @@ public class MainFrame extends JFrame{
 
         progressBar = new JProgressBar(0,10);
         progressBar.setStringPainted(true);
-        mainframe.add(progressBar);
 
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        mainframe.add(progressBar, gbc);
 
 
         cancelButton.addActionListener(new ActionListener() {
