@@ -13,7 +13,6 @@ public class MainFrame extends JFrame{
 
     JFrame mainframe = new JFrame();
 
-    JPanel answerPanel;
     JButton buttonA;
     JButton buttonB;
     JButton buttonC;
@@ -23,7 +22,6 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
-    //eventuell später implementieren:
     JProgressBar progressBar;
 
 
@@ -295,7 +293,7 @@ public class MainFrame extends JFrame{
         buttonD.setText(q.getPossibleAnswers()[3]);
     }
 
-    private void setDefaultButtonColor(){
+    public void setDefaultButtonColor(){
         buttonA.setBackground(Color.lightGray);
         buttonB.setBackground(Color.lightGray);
         buttonC.setBackground(Color.lightGray);
