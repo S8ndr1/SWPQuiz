@@ -13,6 +13,8 @@ public class MainFrame extends JFrame{
 
     JFrame mainframe = new JFrame();
 
+    JLabel points;
+    JPanel answerPanel;
     JButton buttonA;
     JButton buttonB;
     JButton buttonC;
@@ -22,6 +24,7 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+    //eventuell später implementieren:
     JProgressBar progressBar;
 
 
@@ -29,6 +32,7 @@ public class MainFrame extends JFrame{
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
 
+    private int point= 0;
 
 
     public MainFrame(Quiz quiz){
@@ -49,6 +53,33 @@ public class MainFrame extends JFrame{
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+        //Buttons
+        buttonA = new JButton("A");
+        buttonB = new JButton("B");
+        buttonC = new JButton("C"); // Auf Question umschreiben
+        buttonD = new JButton("D");
+
+        answerPanel = new JPanel(new GridLayout(2,2,20,20));
+        answerPanel.setOpaque(false);
+
+        answerPanel.add(buttonA);
+        answerPanel.add(buttonB);
+        answerPanel.add(buttonC);
+        answerPanel.add(buttonD);
+
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 22);
+
+        buttonA.setFont(buttonFont);
+        buttonB.setFont(buttonFont);
+        buttonC.setFont(buttonFont);
+        buttonD.setFont(buttonFont);
+
+        //Punkte
+        points = new JLabel("Punkte: 0");
+        points.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        points.setForeground(new Color(255,215,0)); // Gold
+        points.setHorizontalAlignment(SwingConstants.CENTER);
+
 
         mainframe.setContentPane(hintergrundPanel);
 
@@ -58,7 +89,7 @@ public class MainFrame extends JFrame{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(15,15,15,15);
 
-        JLabel title = new JLabel("Joggl's Quiz");
+        JLabel title = new JLabel("Millionenshow von Temu");
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -72,40 +103,21 @@ public class MainFrame extends JFrame{
         gbc.gridwidth = 2;
         mainframe.add(question, gbc);
 
-        buttonA = new JButton("A");
-        buttonB = new JButton("B");
-        buttonC = new JButton("C"); // Auf Question umschreiben
-        buttonD = new JButton("D");
-
-//A
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
         gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
 
-        mainframe.add(buttonA, gbc);
-//B
-        gbc.gridx = 1;
-        gbc.gridy = 2;
+        mainframe.add(answerPanel, gbc);
 
-        mainframe.add(buttonB, gbc);
-//C
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-
-        mainframe.add(buttonC, gbc);
-//D
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-
-        mainframe.add(buttonD, gbc);
-
-//Titel
+        //Titel
         title.setFont(new Font("Segoe UI", Font.BOLD, 42));
         title.setForeground(new Color(255, 215, 0));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
-//Frage
+        //Frage
         question.setFont(new Font("Segoe UI", Font.BOLD, 28));
         question.setForeground(Color.WHITE);
         question.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,12 +130,12 @@ public class MainFrame extends JFrame{
         questionCheck.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 1;
         gbc.weighty = 0.1;
 
         mainframe.add(questionCheck, gbc);
 
-//Bestätigen und Neustarten
+        //Bestätigen und Neustarten
         submitPanel = new JPanel();
         submitPanel.setOpaque(false);
         submitButton = new JButton("Bestätigen");
@@ -145,13 +157,23 @@ public class MainFrame extends JFrame{
         gbc.gridwidth = 2;
         gbc.weighty = 0.1;
 
+        mainframe.add(points, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+
         mainframe.add(submitPanel, gbc);
 
         progressBar = new JProgressBar(0,10);
         progressBar.setStringPainted(true);
-        mainframe.add(progressBar);
 
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        mainframe.add(progressBar, gbc);
 
 
         cancelButton.addActionListener(new ActionListener() {
@@ -171,6 +193,7 @@ public class MainFrame extends JFrame{
                 setDefaultButtonColor();
                 errorCount = 0;
                 correctCount = 1;
+                point = 0;
                 progressBar.setValue(0);
 
             }
@@ -229,8 +252,7 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
             }
         });
-
-
+        
         // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
         submitButton.addActionListener( new ActionListener(){
             @Override
@@ -241,7 +263,8 @@ public class MainFrame extends JFrame{
                     if (q.isCorrect(selectedAnswer)) {
                         questionCheck.setText("Richtig!");
                         questionCheck.setForeground(Color.GREEN);
-
+                        point++;
+                        points.setText("Punkte: " + point);
 
                         if(quiz.nextQuestion()){
 
@@ -279,7 +302,6 @@ public class MainFrame extends JFrame{
             }
         });
 
-
         mainframe.setSize(800,600);
         mainframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
         mainframe.setVisible(true);
@@ -293,7 +315,7 @@ public class MainFrame extends JFrame{
         buttonD.setText(q.getPossibleAnswers()[3]);
     }
 
-    public void setDefaultButtonColor(){
+    private void setDefaultButtonColor(){
         buttonA.setBackground(Color.lightGray);
         buttonB.setBackground(Color.lightGray);
         buttonC.setBackground(Color.lightGray);
