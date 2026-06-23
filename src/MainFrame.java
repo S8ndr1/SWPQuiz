@@ -163,7 +163,8 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,10);
+        progressBar = new JProgressBar(0,quiz.getQuestionamount()+1); //immer noch zu verbessern aber schon bisschen schöner
+
         progressBar.setStringPainted(true);
 
         gbc.gridx = 0;
@@ -280,6 +281,7 @@ public class MainFrame extends JFrame{
                             quiz.resetQuiz();
                             correctCount = 1;
                             errorCount = 0;
+                            point = 0;
                             progressBar.setValue(0);
 
                         }
