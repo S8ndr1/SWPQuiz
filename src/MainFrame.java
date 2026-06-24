@@ -28,12 +28,8 @@ public class MainFrame extends JFrame{
     //eventuell später implementieren:
     JProgressBar progressBar;
 
-
-
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
-
-
 
     public MainFrame(Quiz quiz){
 
@@ -43,7 +39,7 @@ public class MainFrame extends JFrame{
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
 
-                // Verlauf von oben nach unten (Pink zu Blau)
+                // Farbverlauf von oben nach unten (Pink zu Blau)
                 GradientPaint verlauf = new GradientPaint(
                         0,  0, Color.PINK,
                         getWidth() + 500, getHeight() + 500, Color.BLUE
@@ -209,11 +205,7 @@ public class MainFrame extends JFrame{
         correctCount = 1; // 1 ist bissl pfusch
         errorCount = 0;
 
-
         setDefaultButtonColor();
-
-
-
 
         buttonA.addActionListener( new ActionListener(){
             @Override
@@ -299,12 +291,11 @@ public class MainFrame extends JFrame{
                         isButtonClicked = false;
                         errorCount++;
                     }
-                    }
+                }
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
                 setDefaultButtonColor();
-
             }
         });
 
@@ -335,5 +326,4 @@ public class MainFrame extends JFrame{
     public int getErrorCount(){
         return errorCount;
     }
-
 }
