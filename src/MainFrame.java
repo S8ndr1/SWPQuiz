@@ -25,11 +25,16 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+    JButton scoreboard;
     //eventuell später implementieren:
     JProgressBar progressBar;
 
+
+
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
+
+
 
     public MainFrame(Quiz quiz){
 
@@ -39,7 +44,7 @@ public class MainFrame extends JFrame{
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
 
-                // Farbverlauf von oben nach unten (Pink zu Blau)
+                // Verlauf von oben nach unten (Pink zu Blau)
                 GradientPaint verlauf = new GradientPaint(
                         0,  0, Color.PINK,
                         getWidth() + 500, getHeight() + 500, Color.BLUE
@@ -93,6 +98,20 @@ public class MainFrame extends JFrame{
         gbc.weightx = 1;
         gbc.weighty = 0.1;
         mainframe.add(title, gbc);
+
+
+        scoreboard = new JButton("Scoreboard");
+        scoreboard.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        scoreboard.setBackground(new Color(41, 128, 185));
+        scoreboard.setForeground(Color.WHITE);
+        scoreboard.setFocusPainted(false);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.2;
+        gbc.anchor = GridBagConstraints.EAST;
+        mainframe.add(scoreboard, gbc);
 
         question = new JLabel("Frage...");
         gbc.gridx = 0;
@@ -179,12 +198,12 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
 
-                quiz.resetQuiz(); // zurück zu Frage 1
+                quiz.resetQuiz();                       // zurück zu Frage 1
 
                 q = quiz.getCurrentQuestion();
 
-                selectedAnswer = -1; // Auswahl zurücksetzen
-                questionCheck.setText(""); // Text löschen
+                selectedAnswer = -1;                    // Auswahl zurücksetzen
+                questionCheck.setText("");              // Text löschen
 
                 isButtonClicked = false;
                 updateTexts(q); // erste Frage anzeigen
@@ -194,18 +213,33 @@ public class MainFrame extends JFrame{
                 point = 0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
+
             }
         });
+
+        scoreboard.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                new ScoreboardFrame();
+
+            }
+
+        });
+
 
         q = quiz.getCurrentQuestion();
         updateTexts(q);
 
-        correctCount = 1; //1 ist bissl pfusch
+        correctCount = 1; // 1 ist bissl pfusch
         errorCount = 0;
+
 
         setDefaultButtonColor();
 
-        //welcher Button welche Nummer zugeteilt bekommen hat
+
+
+
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -213,6 +247,7 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
+
             }
         });
 
@@ -246,7 +281,7 @@ public class MainFrame extends JFrame{
             }
         });
         
-        // Hier wird ausgegebn, ob die Antwort richtig oder falsch ist und es wird angegeben, was passiert, wenn die Antwort richtig bzw. falsch ist
+        // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
         submitButton.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -260,40 +295,41 @@ public class MainFrame extends JFrame{
                         points.setText("Punkte: " + point);
 
 
-                        if (quiz.nextQuestion()) {
+                        if(quiz.nextQuestion()){
 
-                            q = quiz.getCurrentQuestion();
-                            updateTexts(q);
-                            correctCount++;
-                            progressBar.setValue(correctCount);
+                        q = quiz.getCurrentQuestion();
+                        updateTexts(q);
+                        correctCount++;
+                        progressBar.setValue(correctCount);
                         }
-                        else {
+                        else{
                             progressBar.setValue(100);
-                            JOptionPane.showMessageDialog(null, "Das Quiz wurde beendet!" + "\n" + "Du hast " + getCorrectCount() + " Fragen beantwortet!" +
-                                    "\n" + "Du hast " + getErrorCount() + " Fehler gemacht!"); //
+                            JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
+                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
                             quiz.resetQuiz();
                             correctCount = 1;
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
                             points.setText("Punkte: " + point);
+
                         }
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-                    }
-                        else {
+
+                    } else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
                     }
-                }
-
+                    }
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
                 setDefaultButtonColor();
+
             }
         });
 
@@ -324,4 +360,5 @@ public class MainFrame extends JFrame{
     public int getErrorCount(){
         return errorCount;
     }
+
 }

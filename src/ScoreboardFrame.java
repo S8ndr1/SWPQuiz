@@ -9,9 +9,7 @@ class ScoreboardFrame extends JFrame {
     public ScoreboardFrame() {
         setTitle("Scoreboard");
         setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         setVisible(true);
     }
