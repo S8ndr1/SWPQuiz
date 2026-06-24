@@ -163,7 +163,7 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,quiz.getQuestionamount()); //immer noch zu verbessern aber schon bisschen schöner
+        progressBar = new JProgressBar(0,quiz.getQuestionamount()+1); //immer noch zu verbessern aber schon bisschen schöner
 
         progressBar.setStringPainted(true);
 
@@ -210,9 +210,6 @@ public class MainFrame extends JFrame{
 
 
         setDefaultButtonColor();
-
-
-
 
         buttonA.addActionListener( new ActionListener(){
             @Override
