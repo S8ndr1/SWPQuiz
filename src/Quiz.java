@@ -37,7 +37,7 @@ public class Quiz {
                 new String[]{"Portugiesisch", "Rumänisch", "Niederländisch", "Spanisch"}, 2));
 
         questions.add(new Question("Welcher Planet ist der größte in unserem Sonnensystem?",
-                new String[]{"Mars", "Saturn", "Jupiter", "Venus"}, 3));
+                new String[]{"Mars", "Saturn", "Jupiter", "Venus"}, 2));
 
         currentQuestion = 0;
 
