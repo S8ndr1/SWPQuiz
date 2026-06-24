@@ -25,8 +25,10 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+    JButton scoreboardbutton;
     //eventuell später implementieren:
     JProgressBar progressBar;
+
 
 
 
@@ -98,6 +100,19 @@ public class MainFrame extends JFrame{
         gbc.weighty = 0.1;
         mainframe.add(title, gbc);
 
+        JButton scoreboard = new JButton("Scoreboard");
+        scoreboard.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        scoreboard.setBackground(new Color(41, 128, 185));
+        scoreboard.setForeground(Color.WHITE);
+        scoreboard.setFocusPainted(false);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.2;
+        gbc.anchor = GridBagConstraints.EAST;
+        mainframe.add(scoreboard, gbc);
+
         question = new JLabel("Frage...");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -145,6 +160,7 @@ public class MainFrame extends JFrame{
         submitButton.setForeground(Color.WHITE);
         submitButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
         submitButton.setFocusPainted(false);
+        scoreboardbutton = new JButton("Scoreboard");
 
         cancelButton.setBackground(new Color(192, 57, 43));
         cancelButton.setForeground(Color.WHITE);
@@ -178,6 +194,8 @@ public class MainFrame extends JFrame{
         mainframe.add(progressBar, gbc);
         point = 0;
 
+
+
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -199,6 +217,13 @@ public class MainFrame extends JFrame{
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
 
+            }
+        });
+
+        // ACTION LISTENER FÜR SCOREBOARD
+        scoreboard.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ScoreboardFrame();
             }
         });
 
@@ -334,6 +359,12 @@ public class MainFrame extends JFrame{
 
     public int getErrorCount(){
         return errorCount;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        new ScoreboardFrame();
+
     }
 
 }
