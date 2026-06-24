@@ -36,11 +36,12 @@ public class Quiz {
         questions.add(new Question("Welche Sprache gehört nicht zur romanischen Sprachfamilie?",
                 new String[]{"Portugiesisch", "Rumänisch", "Niederländisch", "Spanisch"}, 2));
 
+        questions.add(new Question("Welcher Planet ist der größte in unserem Sonnensystem?",
+                new String[]{"Mars", "Saturn", "Jupiter", "Venus"}, 3));
 
         currentQuestion = 0;
 
         Collections.shuffle(questions);
-
     }
         public Question getCurrentQuestion () {
             return questions.get(currentQuestion);
@@ -50,7 +51,8 @@ public class Quiz {
             if (currentQuestion < questions.size() - 1) {
                 currentQuestion++;
                 return true;
-            }else{
+            }
+            else{
                 return false;
             }
         }
@@ -64,4 +66,3 @@ public class Quiz {
         return questions.size();
     }
 }
-

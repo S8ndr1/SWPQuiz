@@ -16,7 +16,6 @@ public class LoginFrame extends JFrame {
         setSize(350, 180);
         setLocationRelativeTo(null); // Zentrieren
 
-
         initLayout();//Geladen
         initLayoutListeners();//Funktion
         setVisible(true);
@@ -40,7 +39,6 @@ public class LoginFrame extends JFrame {
         panel.add(loginButton);
 
         add(panel);
-
 
     }
     //ActionListener
