@@ -25,6 +25,7 @@ public class MainFrame extends JFrame{
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+    JButton scoreboard;
     //eventuell später implementieren:
     JProgressBar progressBar;
 
@@ -97,6 +98,20 @@ public class MainFrame extends JFrame{
         gbc.weightx = 1;
         gbc.weighty = 0.1;
         mainframe.add(title, gbc);
+
+
+        scoreboard = new JButton("Scoreboard");
+        scoreboard.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        scoreboard.setBackground(new Color(41, 128, 185));
+        scoreboard.setForeground(Color.WHITE);
+        scoreboard.setFocusPainted(false);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.2;
+        gbc.anchor = GridBagConstraints.EAST;
+        mainframe.add(scoreboard, gbc);
 
         question = new JLabel("Frage...");
         gbc.gridx = 0;
@@ -200,6 +215,16 @@ public class MainFrame extends JFrame{
                 points.setText("Punkte: " + point);
 
             }
+        });
+
+        scoreboard.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                new ScoreboardFrame();
+
+            }
+
         });
 
 
