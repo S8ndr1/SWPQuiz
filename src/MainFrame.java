@@ -179,12 +179,12 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
 
-                quiz.resetQuiz();                       // zurück zu Frage 1
+                quiz.resetQuiz(); // zurück zu Frage 1
 
                 q = quiz.getCurrentQuestion();
 
-                selectedAnswer = -1;                    // Auswahl zurücksetzen
-                questionCheck.setText("");              // Text löschen
+                selectedAnswer = -1; // Auswahl zurücksetzen
+                questionCheck.setText(""); // Text löschen
 
                 isButtonClicked = false;
                 updateTexts(q); // erste Frage anzeigen
@@ -194,19 +194,18 @@ public class MainFrame extends JFrame{
                 point = 0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
-
             }
         });
-
 
         q = quiz.getCurrentQuestion();
         updateTexts(q);
 
-        correctCount = 1; // 1 ist bissl pfusch
+        correctCount = 1; //1 ist bissl pfusch
         errorCount = 0;
 
         setDefaultButtonColor();
 
+        //welcher Button welche Nummer zugeteilt bekommen hat
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,7 +213,6 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-
             }
         });
 
@@ -248,7 +246,7 @@ public class MainFrame extends JFrame{
             }
         });
         
-        // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
+        // Hier wird ausgegebn, ob die Antwort richtig oder falsch ist und es wird angegeben, was passiert, wenn die Antwort richtig bzw. falsch ist
         submitButton.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -262,36 +260,36 @@ public class MainFrame extends JFrame{
                         points.setText("Punkte: " + point);
 
 
-                        if(quiz.nextQuestion()){
+                        if (quiz.nextQuestion()) {
 
-                        q = quiz.getCurrentQuestion();
-                        updateTexts(q);
-                        correctCount++;
-                        progressBar.setValue(correctCount);
+                            q = quiz.getCurrentQuestion();
+                            updateTexts(q);
+                            correctCount++;
+                            progressBar.setValue(correctCount);
                         }
-                        else{
+                        else {
                             progressBar.setValue(100);
-                            JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
-                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
+                            JOptionPane.showMessageDialog(null, "Das Quiz wurde beendet!" + "\n" + "Du hast " + getCorrectCount() + " Fragen beantwortet!" +
+                                    "\n" + "Du hast " + getErrorCount() + " Fehler gemacht!"); //
                             quiz.resetQuiz();
                             correctCount = 1;
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
                             points.setText("Punkte: " + point);
-
                         }
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-
-                    } else {
+                    }
+                        else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
                     }
                 }
+
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
