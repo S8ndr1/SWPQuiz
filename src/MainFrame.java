@@ -10,6 +10,7 @@ public class MainFrame extends JFrame{
     private Question q;
     public int errorCount;
     public int correctCount;
+    private int point;
 
     JFrame mainframe = new JFrame();
 
@@ -32,7 +33,6 @@ public class MainFrame extends JFrame{
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
 
-    private int point= 0;
 
 
     public MainFrame(Quiz quiz){
@@ -163,7 +163,7 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,quiz.getQuestionamount()+1); //immer noch zu verbessern aber schon bisschen schöner
+        progressBar = new JProgressBar(0,quiz.getQuestionamount()); //immer noch zu verbessern aber schon bisschen schöner
 
         progressBar.setStringPainted(true);
 
@@ -175,7 +175,7 @@ public class MainFrame extends JFrame{
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         mainframe.add(progressBar, gbc);
-
+        point = 0;
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
@@ -196,6 +196,7 @@ public class MainFrame extends JFrame{
                 correctCount = 1;
                 point = 0;
                 progressBar.setValue(0);
+                points.setText("Punkte: " + point);
 
             }
         });
@@ -267,6 +268,7 @@ public class MainFrame extends JFrame{
                         point++;
                         points.setText("Punkte: " + point);
 
+
                         if(quiz.nextQuestion()){
 
                         q = quiz.getCurrentQuestion();
@@ -283,6 +285,7 @@ public class MainFrame extends JFrame{
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
+                            points.setText("Punkte: " + point);
 
                         }
 
