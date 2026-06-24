@@ -89,6 +89,7 @@ public class MainFrame extends JFrame{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(15,15,15,15);
 
+
         JLabel title = new JLabel("Millionenshow von Temu");
         gbc.gridx = 0;
         gbc.gridy = 0;
