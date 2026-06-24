@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class MainFrame extends JFrame{
 
     private boolean isButtonClicked = false;
@@ -27,13 +26,10 @@ public class MainFrame extends JFrame{
     //eventuell später implementieren:
     JProgressBar progressBar;
 
-
-
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
 
     private int point= 0;
-
 
     public MainFrame(Quiz quiz){
 
@@ -43,7 +39,7 @@ public class MainFrame extends JFrame{
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g;
 
-                // Verlauf von oben nach unten (Pink zu Blau)
+                // Farbverlauf von oben nach unten (Pink zu Blau)
                 GradientPaint verlauf = new GradientPaint(
                         0,  0, Color.PINK,
                         getWidth() + 500, getHeight() + 500, Color.BLUE
@@ -53,6 +49,7 @@ public class MainFrame extends JFrame{
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+
         //Buttons
         buttonA = new JButton("A");
         buttonB = new JButton("B");
@@ -79,7 +76,6 @@ public class MainFrame extends JFrame{
         points.setFont(new Font("Segoe UI", Font.BOLD, 22));
         points.setForeground(new Color(255,215,0)); // Gold
         points.setHorizontalAlignment(SwingConstants.CENTER);
-
 
         mainframe.setContentPane(hintergrundPanel);
 
@@ -176,11 +172,9 @@ public class MainFrame extends JFrame{
 
         mainframe.add(progressBar, gbc);
 
-
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
 
                 quiz.resetQuiz();                       // zurück zu Frage 1
 
@@ -196,10 +190,8 @@ public class MainFrame extends JFrame{
                 correctCount = 1;
                 point = 0;
                 progressBar.setValue(0);
-
             }
         });
-
 
         q = quiz.getCurrentQuestion();
         updateTexts(q);
@@ -207,11 +199,7 @@ public class MainFrame extends JFrame{
         correctCount = 1; // 1 ist bissl pfusch
         errorCount = 0;
 
-
         setDefaultButtonColor();
-
-
-
 
         buttonA.addActionListener( new ActionListener(){
             @Override
@@ -220,7 +208,6 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-
             }
         });
 
@@ -254,7 +241,7 @@ public class MainFrame extends JFrame{
             }
         });
         
-        // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
+        // Hier wird ausgegebn ob die Antwort richtig oder falsch ist
         submitButton.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -283,19 +270,17 @@ public class MainFrame extends JFrame{
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
-
                         }
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
-
-                    } else {
+                    }
+                    else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
-                    }
-                    }
+                    }}
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
@@ -331,5 +316,4 @@ public class MainFrame extends JFrame{
     public int getErrorCount(){
         return errorCount;
     }
-
 }
