@@ -11,9 +11,11 @@ public class MainFrame extends JFrame{
     public int errorCount;
     public int correctCount;
     private int point;
+    private boolean isAnswerCorrect;
 
     JFrame mainframe = new JFrame();
 
+    JLabel errors;
     JLabel points;
     JPanel answerPanel;
     JButton buttonA;
@@ -79,6 +81,12 @@ public class MainFrame extends JFrame{
         points.setFont(new Font("Segoe UI", Font.BOLD, 22));
         points.setForeground(new Color(255,215,0)); // Gold
         points.setHorizontalAlignment(SwingConstants.CENTER);
+
+        errors = new JLabel("Fehler: 0");
+        errors.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        errors.setForeground(new Color(255,0,0)); // Rot
+        errors.setHorizontalAlignment(SwingConstants.CENTER);
+
 
 
         mainframe.setContentPane(hintergrundPanel);
@@ -158,13 +166,20 @@ public class MainFrame extends JFrame{
         gbc.gridwidth = 2;
         gbc.weighty = 0.1;
 
-        mainframe.add(points, gbc);
+        JPanel feedbackPanel = new JPanel();
+        feedbackPanel.add(points);
+        feedbackPanel.add(Box.createHorizontalStrut(30));
+        feedbackPanel.add(errors);
+
+
+        hintergrundPanel.add(feedbackPanel, gbc);
         gbc.gridx = 0;
         gbc.gridy = 6;
+        feedbackPanel.setOpaque(false);
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,quiz.getQuestionamount()+1); //immer noch zu verbessern aber schon bisschen schöner
+        progressBar = new JProgressBar(0,quiz.getQuestionamount()); //immer noch zu verbessern aber schon bisschen schöner
 
         progressBar.setStringPainted(true);
 
@@ -198,6 +213,7 @@ public class MainFrame extends JFrame{
                 point = 0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
+                errors.setText("Fehler: " + errorCount);
 
             }
         });
@@ -222,6 +238,7 @@ public class MainFrame extends JFrame{
 
             }
         });
+
 
         buttonB.addActionListener( new ActionListener(){
             @Override
@@ -260,32 +277,39 @@ public class MainFrame extends JFrame{
 
                 if(isButtonClicked) {
 
-                    if (q.isCorrect(selectedAnswer)) {
+                    if (q.isCorrect(selectedAnswer) ) {
                         questionCheck.setText("Richtig!");
                         questionCheck.setForeground(Color.GREEN);
+                        isAnswerCorrect = true;
                         point++;
-                        points.setText("Punkte: " + point);
 
+                        points.setText("Punkte: " + point);
+                        errors.setText("Fehler: " + errorCount);
 
                         if(quiz.nextQuestion()){
 
                         q = quiz.getCurrentQuestion();
                         updateTexts(q);
+                        isAnswerCorrect = false;
                         correctCount++;
-                        progressBar.setValue(correctCount);
+                        progressBar.setValue(point);
                         }
                         else{
                             progressBar.setValue(100);
                             JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
                                     "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
                             quiz.resetQuiz();
+                            q = quiz.getCurrentQuestion();
+                            updateTexts(q);
                             correctCount = 1;
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
                             points.setText("Punkte: " + point);
+                            errors.setText("Fehler: " + errorCount);
 
                         }
+
 
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
@@ -295,6 +319,7 @@ public class MainFrame extends JFrame{
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
+                        errors.setText("Fehler: " + errorCount);
                     }
                     }
                 else{
