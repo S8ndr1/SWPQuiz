@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class MainFrame extends JFrame{
 
     private boolean isButtonClicked = false;
@@ -29,12 +28,8 @@ public class MainFrame extends JFrame{
     //eventuell später implementieren:
     JProgressBar progressBar;
 
-
-
     //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
-
-
 
     public MainFrame(Quiz quiz){
 
@@ -81,7 +76,6 @@ public class MainFrame extends JFrame{
         points.setForeground(new Color(255,215,0)); // Gold
         points.setHorizontalAlignment(SwingConstants.CENTER);
 
-
         mainframe.setContentPane(hintergrundPanel);
 
         mainframe.setLayout(new GridBagLayout());
@@ -90,7 +84,7 @@ public class MainFrame extends JFrame{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(15,15,15,15);
 
-
+        //Titel
         JLabel title = new JLabel("Millionenshow von Temu");
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -99,7 +93,7 @@ public class MainFrame extends JFrame{
         gbc.weighty = 0.1;
         mainframe.add(title, gbc);
 
-
+        //Scoreboard
         scoreboard = new JButton("Scoreboard");
         scoreboard.setFont(new Font("Segoe UI", Font.BOLD, 14));
         scoreboard.setBackground(new Color(41, 128, 185));
@@ -179,7 +173,7 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,quiz.getQuestionamount()); //immer noch zu verbessern aber schon bisschen schöner
+        progressBar = new JProgressBar(0,quiz.getQuestionamount());
 
         progressBar.setStringPainted(true);
 
@@ -193,27 +187,26 @@ public class MainFrame extends JFrame{
         mainframe.add(progressBar, gbc);
         point = 0;
 
+        //Cancel Button
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-                quiz.resetQuiz();                       // zurück zu Frage 1
+                quiz.resetQuiz(); //zurück zu Frage 1
 
                 q = quiz.getCurrentQuestion();
 
-                selectedAnswer = -1;                    // Auswahl zurücksetzen
-                questionCheck.setText("");              // Text löschen
+                selectedAnswer = -1; //Auswahl zurücksetzen
+                questionCheck.setText(""); //Text löschen
 
                 isButtonClicked = false;
-                updateTexts(q); // erste Frage anzeigen
+                updateTexts(q); //erste Frage anzeigen
                 setDefaultButtonColor();
                 errorCount = 0;
                 correctCount = 1;
                 point = 0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
-
             }
         });
 
@@ -222,9 +215,7 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
 
                 new ScoreboardFrame();
-
             }
-
         });
 
 
@@ -234,12 +225,9 @@ public class MainFrame extends JFrame{
         correctCount = 1; // 1 ist bissl pfusch
         errorCount = 0;
 
-
         setDefaultButtonColor();
 
-
-
-
+        //Buttons werden die Nummern zugeteilt
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -247,7 +235,6 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-
             }
         });
 
@@ -294,14 +281,13 @@ public class MainFrame extends JFrame{
                         point++;
                         points.setText("Punkte: " + point);
 
-
                         if(quiz.nextQuestion()){
-
                         q = quiz.getCurrentQuestion();
                         updateTexts(q);
                         correctCount++;
                         progressBar.setValue(correctCount);
                         }
+
                         else{
                             progressBar.setValue(100);
                             JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
@@ -312,24 +298,23 @@ public class MainFrame extends JFrame{
                             point = 0;
                             progressBar.setValue(0);
                             points.setText("Punkte: " + point);
-
                         }
-
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
+                    }
 
-                    } else {
+                    else {
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
                         errorCount++;
-                    }
-                    }
+                    }}
+
                 else{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
-                setDefaultButtonColor();
 
+                setDefaultButtonColor();
             }
         });
 
@@ -360,5 +345,4 @@ public class MainFrame extends JFrame{
     public int getErrorCount(){
         return errorCount;
     }
-
 }

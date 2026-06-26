@@ -39,20 +39,21 @@ public class LoginFrame extends JFrame {
         panel.add(loginButton);
 
         add(panel);
-
     }
+
     //ActionListener
     private void initLayoutListeners() {
         loginButton.addActionListener(e -> {
 
             if(userField.getText().trim().isEmpty()){
                 JOptionPane.showMessageDialog(null,"Geben Sie bitte einen namen ein.");
-            }else {
-
+            }
+            else {
                 Quiz quiz = new Quiz();
                 //Neues Fenster MainFrame und dieses Fenster LoginFrame schließen
                 new MainFrame(quiz);
                 this.dispose();
-            }});
+            }
+        });
     }
 }
