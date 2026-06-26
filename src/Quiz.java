@@ -57,7 +57,7 @@ public class Quiz {
             }
         }
 
-    //Quiz wieder auf Frage eins Reseten
+    //Quiz wieder auf Frage eins reseten
     public void resetQuiz() {
         currentQuestion = 0;
         Collections.shuffle(questions);
