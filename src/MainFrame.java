@@ -25,10 +25,8 @@ public class MainFrame extends JFrame{
     JButton submitButton;
     JButton cancelButton;
     JButton scoreboard;
-    //eventuell später implementieren:
     JProgressBar progressBar;
 
-    //-1 hat nichts auszusagen, wird später verändert
     private int selectedAnswer = -1;
 
     public MainFrame(Quiz quiz){
@@ -49,6 +47,7 @@ public class MainFrame extends JFrame{
                 g2d.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+
         //Buttons
         buttonA = new JButton("A");
         buttonB = new JButton("B");
@@ -218,11 +217,10 @@ public class MainFrame extends JFrame{
             }
         });
 
-
         q = quiz.getCurrentQuestion();
         updateTexts(q);
 
-        correctCount = 1; // 1 ist bissl pfusch
+        correctCount = 1;
         errorCount = 0;
 
         setDefaultButtonColor();
@@ -268,7 +266,7 @@ public class MainFrame extends JFrame{
             }
         });
         
-        // Hier wird ausgegebn ob die Antwort richtig oder falsch war.
+        // Hier wird ausgegebn ob die Antwort richtig oder falsch ist
         submitButton.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
