@@ -203,7 +203,7 @@ public class MainFrame extends JFrame{
                 setDefaultButtonColor();
                 errorCount = 0;
                 correctCount = 1;
-                point = 0;
+                point =0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
             }
