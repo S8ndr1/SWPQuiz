@@ -124,6 +124,7 @@ public class MainFrame extends JFrame{
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         mainframe.add(question, gbc);
 
         gbc.gridx = 0;
