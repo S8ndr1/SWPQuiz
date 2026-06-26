@@ -334,8 +334,7 @@ public class MainFrame extends JFrame{
                             errors.setText("Fehler: " + errorCount);
 
                         }
-
-
+                        
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
 
