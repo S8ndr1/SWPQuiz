@@ -28,7 +28,7 @@ public class Quiz {
                 new String[]{"Loire", "Rhône", "Themse", "Donau"}, 3));
 
         questions.add(new Question("In welchem Jahr landeten die ersten Menschen auf dem Mond?",
-                new String[]{"1967", "1968", "1969", "1970"}, 3));
+                new String[]{"1967", "1968", "1969", "1970"}, 2));
 
         questions.add(new Question("Welcher Wissenschaftler formulierte die drei Bewegungsgesetze der klassischen Mechanik?",
                 new String[]{"Albert Einstein", "Isaac Newton", "Galileo Galilei", "Johannes Kepler"}, 1));
