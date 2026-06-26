@@ -9,9 +9,9 @@ public class MainFrame extends JFrame{
     private boolean isButtonClicked = false;
     private Question q;
     public int errorCount;
-    public int correctCount;
+    public int questionAmount;
     private int point;
-    private boolean isAnswerCorrect;
+    private boolean answeredWrong;
 
     JFrame mainframe = new JFrame();
 
@@ -230,7 +230,7 @@ public class MainFrame extends JFrame{
                 updateTexts(q); // erste Frage anzeigen
                 setDefaultButtonColor();
                 errorCount = 0;
-                correctCount = 1;
+                questionAmount = 1;
                 point = 0;
                 progressBar.setValue(0);
                 points.setText("Punkte: " + point);
@@ -241,7 +241,7 @@ public class MainFrame extends JFrame{
         q = quiz.getCurrentQuestion();
         updateTexts(q);
 
-        correctCount = 1; // 1 ist bissl pfusch
+        questionAmount = 1; // 1 ist bissl pfusch
         errorCount = 0;
 
 
@@ -299,8 +299,12 @@ public class MainFrame extends JFrame{
                     if (q.isCorrect(selectedAnswer) ) {
                         questionCheck.setText("Richtig!");
                         questionCheck.setForeground(Color.GREEN);
-                        isAnswerCorrect = true;
-                        point++;
+
+                        if(!answeredWrong) {
+                            point++;
+                        }
+                        answeredWrong = false;
+
 
                         points.setText("Punkte: " + point);
                         errors.setText("Fehler: " + errorCount);
@@ -309,18 +313,17 @@ public class MainFrame extends JFrame{
 
                             q = quiz.getCurrentQuestion();
                             updateTexts(q);
-                            isAnswerCorrect = false;
-                            correctCount++;
-                            progressBar.setValue(point);
+                            questionAmount++;
+                            progressBar.setValue(questionAmount -1);
                         }
                         else{
                             progressBar.setValue(100);
-                            JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+ "Du hast "+ getCorrectCount() + " Fragen beantwortet!" +
-                                    "\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
+                            JOptionPane.showMessageDialog(null,"Das Quiz wurde beendet!" +"\n"+"\n" + "Du hast "+ getQuestionAmount() + " Fragen beantwortet!" +
+                                    "\n" +"Du hast "+ getPointAmount() +" Punkte erreicht!" +"\n" + "Du hast "+ getErrorCount() + " Fehler gemacht!"); //
                             quiz.resetQuiz();
                             q = quiz.getCurrentQuestion();
                             updateTexts(q);
-                            correctCount = 1;
+                            questionAmount = 1;
                             errorCount = 0;
                             point = 0;
                             progressBar.setValue(0);
@@ -328,8 +331,6 @@ public class MainFrame extends JFrame{
                             errors.setText("Fehler: " + errorCount);
 
                         }
-
-
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
 
@@ -337,6 +338,7 @@ public class MainFrame extends JFrame{
                         questionCheck.setText("Falsch!");
                         questionCheck.setForeground(Color.RED);
                         isButtonClicked = false;
+                        answeredWrong = true;
                         errorCount++;
                         errors.setText("Fehler: " + errorCount);
                     }
@@ -369,12 +371,15 @@ public class MainFrame extends JFrame{
         buttonD.setBackground(Color.lightGray);
     }
 
-    public int getCorrectCount(){
-        return correctCount;
+    public int getQuestionAmount(){
+        return questionAmount;
     }
 
     public int getErrorCount(){
         return errorCount;
+    }
+    public int getPointAmount(){
+        return point;
     }
 
 }
