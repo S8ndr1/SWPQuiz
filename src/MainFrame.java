@@ -148,14 +148,19 @@ public class MainFrame extends JFrame{
 
         JButton[] buttons = {buttonA, buttonB, buttonC, buttonD};
 
+        //Antworten Richtig/Falsch
         questionCheck = new JLabel("");
         questionCheck.setFont(new Font("Segoe UI", Font.BOLD, 24));
         questionCheck.setForeground(Color.WHITE);
         questionCheck.setHorizontalAlignment(SwingConstants.CENTER);
+
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1;
         gbc.weighty = 0.1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
 
         mainframe.add(questionCheck, gbc);
 
