@@ -265,7 +265,7 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
             }
         });
-        
+
         // Hier wird ausgegebn ob die Antwort richtig oder falsch ist
         submitButton.addActionListener( new ActionListener(){
             @Override
