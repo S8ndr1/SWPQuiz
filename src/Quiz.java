@@ -3,11 +3,18 @@ import java.util.Collections;
 
 public class Quiz {
 
+    // Speichert alle Fragen des Quiz
     private ArrayList<Question> questions;
+
+    // Speichert die aktuelle Frage
     private int currentQuestion;
 
     public Quiz() {
+
+        // Erstellt die Fragenliste
         questions = new ArrayList<>();
+
+        // Fragen werden hinzugefügt
 
         questions.add(new Question("Welches Land hat die längste Küstenlinie der Welt?",
                 new String[]{"Russland", "Australien", "Kanada", "USA"}, 2));
@@ -39,30 +46,39 @@ public class Quiz {
         questions.add(new Question("Welcher Planet ist der größte in unserem Sonnensystem?",
                 new String[]{"Mars", "Saturn", "Jupiter", "Venus"}, 2));
 
+        // Das Quiz beginnt bei der ersten Frage
         currentQuestion = 0;
 
+        // Mischt die Reihenfolge der Fragen
         Collections.shuffle(questions);
     }
+
+        // Gibt die aktuelle Frage zurück
         public Question getCurrentQuestion () {
             return questions.get(currentQuestion);
         }
 
+        // Wechselt zur nächsten Frage
         public boolean nextQuestion () {
+
+            // Solange noch Fragen vorhanden sind
             if (currentQuestion < questions.size() - 1) {
                 currentQuestion++;
                 return true;
             }
             else{
+                // Keine weiteren Fragen vorhanden
                 return false;
             }
         }
 
-    //Quiz wieder auf Frage eins reseten
+    //Quiz wieder auf Frage 1 zurückstellen
     public void resetQuiz() {
         currentQuestion = 0;
         Collections.shuffle(questions);
     }
 
+    // Gibt die Anzahl aller Fragen zurück
     public int getQuestionamount(){
         return questions.size();
     }

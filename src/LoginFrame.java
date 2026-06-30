@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
+    // Eingabefeld für den Benutzernamen
     private JTextField userField;
+
+    // Button zum Starten des Quiz
     private JButton loginButton;
 
     public LoginFrame() {
@@ -16,25 +19,26 @@ public class LoginFrame extends JFrame {
         setSize(350, 180);
         setLocationRelativeTo(null); // Zentrieren
 
-        initLayout();//Geladen
-        initLayoutListeners();//Funktion
+        initLayout();//Oberfläche erstellen
+        initLayoutListeners();//Button-Funktionen hinzufügen
         setVisible(true);
     }
 
     private void initLayout() {
-        //Style
+
+        // Hauptpanel mit GridLayout
         JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
         panel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        //Label
+        // Eingabefeld für den Benutzernamen
         JLabel userLabel = new JLabel("Benutzername:");
         panel.add(userLabel);
 
-        //Eingabefeld
+        // Button zum Starten des Quiz
         userField = new JTextField(20);
         panel.add(userField);
 
-        //Button
+        // Button zum Starten des Quiz
         loginButton = new JButton("Anmelden");
         panel.add(loginButton);
 
@@ -43,12 +47,15 @@ public class LoginFrame extends JFrame {
 
     //ActionListener
     private void initLayoutListeners() {
+        // Wird ausgeführt, wenn auf "Anmelden" geklickt wird
         loginButton.addActionListener(e -> {
 
+            // Prüft, ob ein Benutzername eingegeben wurde
             if(userField.getText().trim().isEmpty()){
                 JOptionPane.showMessageDialog(null,"Geben Sie bitte einen namen ein.");
             }
             else {
+                // Erstellt ein neues Quiz
                 Quiz quiz = new Quiz();
                 //Neues Fenster MainFrame und dieses Fenster LoginFrame schließen
                 new MainFrame(quiz);
