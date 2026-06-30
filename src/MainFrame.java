@@ -134,12 +134,7 @@ public class MainFrame extends JFrame{
         scoreboard.setForeground(Color.WHITE);
         scoreboard.setFocusPainted(false);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0.2;
-        gbc.anchor = GridBagConstraints.EAST;
-        mainframe.add(scoreboard, gbc);
+
 
         question = new JLabel("Frage...");
         gbc.gridx = 0;
