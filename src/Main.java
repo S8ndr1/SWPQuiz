@@ -1,9 +1,7 @@
-import javax.swing.*;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+// Startklasse des Programms
 void main() {
 
+    // Öffnet das Loginfenster
     LoginFrame frame = new LoginFrame();
 
 }

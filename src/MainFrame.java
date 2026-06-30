@@ -3,31 +3,52 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class MainFrame extends JFrame{
 
+    // Speichert, ob bereits eine Antwort ausgewählt wurde
     private boolean isButtonClicked = false;
+
+    // Aktuelle Frage
     private Question q;
+
+    // Anzahl der falschen Antworten
     public int errorCount;
+
+    // Nummer der aktuellen Frage
     public int questionAmount;
+
+    // Punktestand
     private int point;
+
+    // Merkt sich, ob die aktuelle Frage bereits falsch beantwortet wurde
     private boolean answeredWrong;
 
     JFrame mainframe = new JFrame();
 
+    // Anzeige für Punkte und Fehler
     JLabel errors;
     JLabel points;
     JPanel answerPanel;
+
+    // Antwortbuttons
     JButton buttonA;
     JButton buttonB;
     JButton buttonC;
     JButton buttonD;
     JLabel question;
+
+    // Für Ausgabe von Richtig oder Falsch
     JLabel questionCheck;
+
+    // Panel mit Bestätigen- und Neustarten-Button
     JPanel submitPanel;
     JButton submitButton;
     JButton cancelButton;
+
+    //Button zum Öffnen des Scoreboards
     JButton scoreboard;
+
+    //Anzeige des Fortschritts des Quiz
     JProgressBar progressBar;
 
 
@@ -194,7 +215,7 @@ public class MainFrame extends JFrame{
 
         mainframe.add(submitPanel, gbc);
 
-        progressBar = new JProgressBar(0,quiz.getQuestionamount()); //immer noch zu verbessern aber schon bisschen schöner
+        progressBar = new JProgressBar(0,quiz.getQuestionamount());
 
         progressBar.setStringPainted(true);
 
@@ -208,13 +229,13 @@ public class MainFrame extends JFrame{
         mainframe.add(progressBar, gbc);
         point = 0;
 
-
         scoreboard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
                 new ScoreboardFrame();
             }});
 
+        // Setzt das gesamte Quiz zurück
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -222,7 +243,7 @@ public class MainFrame extends JFrame{
 
                 quiz.resetQuiz();                       // zurück zu Frage 1
 
-                q = quiz.getCurrentQuestion();
+                q = quiz.getCurrentQuestion();          // Erste Frage laden
 
                 selectedAnswer = -1;                    // Auswahl zurücksetzen
                 questionCheck.setText("");              // Text löschen
@@ -238,16 +259,15 @@ public class MainFrame extends JFrame{
                 errors.setText("Fehler: " + errorCount);
         }});
 
-
         q = quiz.getCurrentQuestion();
         updateTexts(q);
 
-        questionAmount = 1; // 1 ist bissl pfusch
+        questionAmount = 1; // 1 Da es hier mit einem Array gearbeitet wird, das mit 0 beginnt
         errorCount = 0;
-
 
         setDefaultButtonColor();
 
+        // Antwort A auswählen
         buttonA.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -255,11 +275,10 @@ public class MainFrame extends JFrame{
                 isButtonClicked = true;
                 selectedAnswer = 0;
                 buttonA.setBackground(Color.ORANGE);
-
             }
         });
 
-
+        // Antwort B auswählen
         buttonB.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -270,6 +289,7 @@ public class MainFrame extends JFrame{
             }
         });
 
+        // Antwort C auswählen
         buttonC.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -280,6 +300,7 @@ public class MainFrame extends JFrame{
             }
         });
 
+        // Antwort D auswählen
         buttonD.addActionListener( new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -295,21 +316,25 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                // 1. IF --> Wurde eine Antwort ausgewählt? False --> Meldung zum Auswählen einer Antwort
                 if(isButtonClicked) {
 
+                    // 2. IF --> Ist die ausgewählte Antwort richtig? False --> Ausgabe, dass Antwort falsch ist, keine Punkte für Frage mehr möglich
                     if (q.isCorrect(selectedAnswer) ) {
                         questionCheck.setText("Richtig!");
                         questionCheck.setForeground(Color.GREEN);
 
+                        // 3. IF --> Wurde Frage bereits falsch beantwortet? False --> Punkte erhöhen sich
                         if(!answeredWrong) {
                             point++;
                         }
                         answeredWrong = false;
 
-
+                        // Ausgabe der Punkte und Fehler
                         points.setText("Punkte: " + point);
                         errors.setText("Fehler: " + errorCount);
 
+                        // 4. IF --> Gibt es noch weitere Fragen? True --> Nächste Frage wird geladen, False --> Quiz wird auf Initialzustand gestellt, nachdem eine Meldung ausgegeben wurde
                         if(quiz.nextQuestion()){
 
                             q = quiz.getCurrentQuestion();
@@ -330,8 +355,8 @@ public class MainFrame extends JFrame{
                             progressBar.setValue(0);
                             points.setText("Punkte: " + point);
                             errors.setText("Fehler: " + errorCount);
-
                         }
+                        // Aktualisiert die Anzeige mit der aktuellen Frage und den Antwortmöglichkeiten
                         updateTexts(quiz.getCurrentQuestion());
                         isButtonClicked = false;
 
@@ -348,7 +373,6 @@ public class MainFrame extends JFrame{
                     JOptionPane.showMessageDialog(null,"Es wurde keine Antwortmöglichkeit gewählt");
                 }
                 setDefaultButtonColor();
-
             }
         });
 
@@ -357,6 +381,7 @@ public class MainFrame extends JFrame{
         mainframe.setVisible(true);
     }
 
+    // Methode um Antwortmöglichkeiten anzupassen
     private void updateTexts(Question q) {
         question.setText(q.getQuestionText());
         buttonA.setText(q.getPossibleAnswers()[0]);
@@ -365,6 +390,7 @@ public class MainFrame extends JFrame{
         buttonD.setText(q.getPossibleAnswers()[3]);
     }
 
+    // Setter - Methode für die Anfangsfarbe der Buttons
     private void setDefaultButtonColor(){
         buttonA.setBackground(Color.lightGray);
         buttonB.setBackground(Color.lightGray);
@@ -372,13 +398,18 @@ public class MainFrame extends JFrame{
         buttonD.setBackground(Color.lightGray);
     }
 
+    // Anzahl der Fragen
     public int getQuestionAmount(){
         return questionAmount;
     }
 
+
+    // Fehler
     public int getErrorCount(){
         return errorCount;
     }
+
+    // Punkte
     public int getPointAmount(){
         return point;
     }
