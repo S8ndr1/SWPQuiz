@@ -52,7 +52,7 @@ public class LoginFrame extends JFrame {
 
             // Prüft, ob ein Benutzername eingegeben wurde
             if(userField.getText().trim().isEmpty()){
-                JOptionPane.showMessageDialog(null,"Geben Sie bitte einen namen ein.");
+                JOptionPane.showMessageDialog(null,"Geben Sie bitte ihren namen ein.");
             }
             else {
                 // Erstellt ein neues Quiz
